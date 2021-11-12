@@ -19,6 +19,18 @@ function handleButtonClick(event) {
   chrome.storage.sync.set({ color });
 }
 
+function saveToBeReplaced()
+{
+  const toBeReplaced = document.getElementById("toBeReplaced").value;
+  chrome.storage.sync.set({ toBeReplaced });
+}
+
+function saveToBeReplacedWith()
+{
+  const toBeReplacedWith = document.getElementById("toBeReplacedWith").value;
+  chrome.storage.sync.set({ toBeReplacedWith });
+}
+
 // Add a button to the page for each supplied color
 function constructOptions(buttonColors) {
   chrome.storage.sync.get("color", (data) => {
@@ -40,6 +52,21 @@ function constructOptions(buttonColors) {
       button.addEventListener("click", handleButtonClick);
       page.appendChild(button);
     }
+  });
+
+
+  chrome.storage.sync.get("toBeReplaced", (data) => {
+    element = document.getElementById("toBeReplaced");
+    element.value = data.toBeReplaced;
+
+    element.addEventListener("input", saveToBeReplaced);
+  });
+
+  chrome.storage.sync.get("toBeReplacedWith", (data) => {
+    element = document.getElementById("toBeReplacedWith");
+    element.value = data.toBeReplacedWith;
+
+    element.addEventListener("input", saveToBeReplacedWith);
   });
 }
 
